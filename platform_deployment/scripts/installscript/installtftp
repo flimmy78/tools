@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+#       script to remake kernel
+#
+
+logfile="/var/log/zhicloud_install.log"
+#install_path="/home/zhicloud/lib"
+install_path=$(cd "$(dirname "$0")";cd ..;pwd)
+
+echo "config tftp server..."
+echo "config tftp server..." >> $logfile
+
+mv -f /etc/xinetd.d/tftp /etc/xinetd.d/tftp.bck
+cp ${install_path}/lib/tftp /etc/xinetd.d/tftp
+service xinetd restart >> $logfile
+
+echo "completed config tftp server..."
+echo "completed config tftp server..." >> $logfile
+

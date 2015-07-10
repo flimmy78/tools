@@ -1,0 +1,116 @@
+#!/bin/sh
+#
+#       script to remake kernel
+#
+
+logfile="/var/log/zhicloud_install.log"
+install_path="/home/zhicloud/lib"
+HOME=/${LOGNAME}
+
+
+##########################################################
+#step 1:
+#config rpmmacros
+#
+
+echo "config rpmmacros..."
+echo "config rpmmacros..." >> $logfile
+
+mkdir -p $HOME/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+
+echo "%_topdir %(echo $HOME)/rpmbuild" > /root/.rpmmacros
+
+echo "%_topdir %(echo $HOME)/rpmbuild ==> rpmmacros" >> $logfile
+echo "cmd : rngd -r /dev/urandom" >> $logfile
+rngd -r /dev/urandom >> $logfile
+
+echo "completed config rpmmacros"
+echo "completed config rpmmacros" >> $logfile
+
+
+##########################################################
+#step 2:
+#install kernel-2.6.32-358.18.1
+#
+groupadd mockbuild
+useradd mockbuild -g mockbuild
+
+echo "start install kernel-2.6.32-358.18.1..."
+echo "start install kernel-2.6.32-358.18.1..." >> $logfile
+cd ${install_path}
+if ! rpm -i kernel-2.6.32-358.18.1.el6.src.rpm 2>>$logfile
+then 
+	echo "install kernel-2.6.32 rpm packet fail"
+	echo "install kernel-2.6.32 rpm packet fail" >> $logfile
+	exit 1
+fi 
+cd $HOME/rpmbuild/SPECS
+if ! rpmbuild -bp --target=$(uname -m) kernel.spec 2>>$logfile
+then 
+	echo "rpmbuild kernel.spec fail"
+	echo "rpmbuild kernel.spec fail" >> $logfile
+	exit 1
+fi 
+cd $HOME/rpmbuild/SOURCES
+
+if ! tar jxf linux-2.6.32-358.18.1.el6.tar.bz2 -C /usr/src/kernels/ 2>>$logfile
+then 
+	echo "tar jxf linux-2.6.32 fail"
+	echo "tar jxf linux-2.6.32 fail" >> $logfile
+	exit 1
+fi 
+cd /usr/src/kernels/
+echo "replace linux-2.6.32-358.18.1.el6"
+echo "replace linux-2.6.32-358.18.1.el6" >> $logfile
+mv -f 2.6.32-431.17.1.el6.x86_64/ $(uname -r)-old
+mv linux-2.6.32-358.18.1.el6/ $(uname -r)
+
+echo "make mrproper..."
+echo "make mrproper..." >> $logfile
+cd $(uname -r)
+if ! make mrproper 2>>$logfile
+then
+	echo "make mrproper fail"
+	echo "make mrproper fail" >> $logfile
+fi
+cp ../$(uname -r)-old/Module.symvers ./ 2>>$logfile
+cp /boot/config-$(uname -r) ./.config 2>>$logfile
+
+if ! make oldconfig 2>>$logfile
+then
+	echo "make oldconfig fail"
+	echo "make oldconfig fail" >> $logfile
+fi
+
+if ! make prepare 2>>$logfile
+then
+	echo "make prepare fail"
+	echo "make prepare fail" >> $logfile
+fi
+
+if ! make scripts 2>>$logfile
+then
+	echo "make scripts fail"
+	echo "make scripts fail" >> $logfile
+fi
+
+if ! make CONFIG_BLK_DEV_NBD=m M=drivers/block 2>>$logfile
+then
+	echo "make CONFIG_BLK_DEV_NBD=m M=drivers/block fail"
+	echo "make CONFIG_BLK_DEV_NBD=m M=drivers/block fail" >> $logfile
+fi
+
+cd /usr/src/kernels/$(uname -r)
+cp drivers/block/nbd.ko /lib/modules/$(uname -r)/kernel/drivers/block/
+
+
+echo "depmod -a"
+echo "depmod -a" >> $logfile
+depmod -a >> $logfile
+
+echo "modprobe nbd" >> $logfile
+modprobe nbd >> $logfile
+
+echo "lsmod|grep nbd" >> $logfile
+lsmod|grep nbd >> $logfile
+

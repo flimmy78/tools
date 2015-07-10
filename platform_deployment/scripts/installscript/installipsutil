@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+#       script to install ipsutil
+#
+
+logfile="/var/log/zhicloud_install.log"
+#install_path="/home/zhicloud/lib"
+install_path=$(cd "$(dirname "$0")";cd ..;pwd)
+
+cd ${install_path}/lib
+
+echo "start install psutil..."
+echo "start install psutil..." >> $logfile
+if ! tar -zxf psutil-1.0.1.tar.gz 2>>$logfile
+then
+    echo "tar psutil packet fail"
+    echo "tar psutil packet fail" >> $logfile
+    exit 1
+fi
+
+cd psutil-1.0.1
+if ! python ./setup.py install 2>>$logfile
+then
+    echo "install psutil fail"
+    echo "tar psutil fail" >> $logfile 
+    exit 1
+fi
+echo "completed install psutil..."
+echo "completed install psutil..." >> $logfile

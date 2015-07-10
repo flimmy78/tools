@@ -1,0 +1,77 @@
+#!/bin/sh
+#
+#	script to install probuff
+#
+
+logfile="/var/log/zhicloud_install.log"
+install_path="/home/zhicloud/lib"
+
+cd ${install_path}
+
+echo "install protobuf"
+echo "start install protobuf" >> $logfile
+
+if ! tar -zxf protobuf-2.5.0.tar.gz 2>>$logfile
+then
+    echo "tar protobuf packet fail" >> $logfile
+fi
+
+cd protobuf-2.5.0
+if ! ./configure 2>>$logfile
+then
+    echo "configure protobuf fail"
+    echo "configure protobuf fail" >> $logfile
+    exit 1
+fi
+
+if ! make 2>>$logfile
+then
+    echo "make protobuf fail"
+    echo "make protobuf fail" >> $logfile
+    exit 1
+fi		
+
+if ! make check 2>>$logfile
+then
+    echo "make check protobuf fail"
+    echo "make check protobuf fail" >> $logfile
+    exit 1
+fi
+
+if ! make install 2>>$logfile
+then
+    echo "make install protobuf fail"
+    echo "make install protobuf fail" >> $logfile
+    exit 1
+fi
+if ! cp -f ${install_path}/setuptools-0.6c11-py2.6.egg ${install_path}/protobuf-2.5.0/python 2>>$logfile
+then
+    echo "set setuptools fail"
+    echo "set setuptools fail" >> $logfile
+    exit 1
+fi
+cd python
+
+if ! python ./setup.py build 2>>$logfile
+then
+    echo "python setup build fail"
+    echo "python setup build fail" >> $logfile
+    exit 1
+fi
+
+if ! python ./setup.py test 2>>$logfile
+then 
+    echo "python setup.py test fail"
+    echo "python ./setup.py test fail" >> $logfile
+    exit 1
+fi
+
+if ! python ./setup.py install 2>>$logfile
+then 
+    echo "python setup.py install fail"
+    echo "python ./setup.py install fail" >> $logfile
+    exit 1
+fi
+
+echo "completed install protobuf"
+echo "completed install protobuf" >> $logfile

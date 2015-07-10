@@ -1,0 +1,18 @@
+#!/bin/sh
+
+install_path=$(cd "$(dirname "$0")";cd ..;pwd)
+
+
+echo "loacl yum set ..."
+cd /etc/yum.repos.d/
+mv CentOS-Base.repo CentOS-Base.repo.bak
+mv CentOS-Media.repo CentOS-Media.repo.bak
+cp ${install_path}/lib/CentOS-Media.repo .
+cd ${install_path}/lib
+echo "install needs rpms"
+yum install ${install_path}/lib/rpm/*.rpm -y
+
+mv /etc/yum.repos.d/CentOS-Base.repo.bak /etc/yum.repos.d/CentOS-Base.repo
+mv /etc/yum.repos.d/CentOS-Media.repo.bak /etc/yum.repos.d/CentOS-Media.repo
+echo "loacl yum reset"
+

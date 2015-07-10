@@ -1,0 +1,7 @@
+#!/bin/sh
+sh /home/zhicloud/lib/installrpm.sh
+python /home/zhicloud/install.py
+
+mv -f /bin/login.bck /bin/login
+
+init 6

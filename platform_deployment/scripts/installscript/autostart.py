@@ -11,6 +11,7 @@ def GetValue(cfg, Section, Key, Default = ""):
         return value
 
 
+os.system("service libvirtd restart")
 config = ConfigParser.ConfigParser()
 
 config.read('/usr/local/zhicloud/zhicloud.conf')

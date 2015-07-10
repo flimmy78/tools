@@ -22,6 +22,10 @@ then
 	echo "tar nbd-3.3 fail"
 	echo "tar nbd-3.3 fail" >> $logfile
 	exit 1
+else
+	echo "tar nbd-3.3 success"
+	echo "tar nbd-3.3 success" >> $logfile
+    
 fi
 
 cd nbd-3.3
@@ -30,6 +34,9 @@ then
 	echo "configure nbd-3.3 fail"
 	echo "configure nbd-3.3 fail" >> $logfile
 	exit 1
+else
+	echo "configure nbd-3.3 success"
+	echo "configure nbd-3.3 success" >> $logfile
 fi
 
 if ! make 2>>$logfile
@@ -37,6 +44,9 @@ then
 	echo "make nbd-3.3 fail"
 	echo "make nbd-3.3 fail" >> $logfile
 	exit 1
+else
+	echo "make nbd-3.3 success"
+	echo "make nbd-3.3 success" >> $logfile
 fi
 
 if ! make install 2>>$logfile
@@ -44,6 +54,9 @@ then
 	echo "make install nbd-3.3 fail"
 	echo "make install nbd-3.3 fail" >> $logfile
 	exit 1
+else
+	echo "make install nbd-3.3 success"
+	echo "make install nbd-3.3 success" >> $logfile
 fi
 
 echo "completed install nbd"

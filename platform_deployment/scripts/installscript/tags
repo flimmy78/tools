@@ -178,6 +178,7 @@ update	progressbar/widgets.py	/^    def update(self, pbar, width):$/;"	m	class:B
 update	progressbar/widgets.py	/^    def update(self, pbar, width):$/;"	m	class:BouncingBar
 update	progressbar/widgets.py	/^    def update(self, pbar, width):$/;"	m	class:WidgetHFill
 user_input	install.py	/^def user_input(value = "1234567890.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"):$/;"	f
+uuid	install.py	/^import uuid$/;"	i
 uuid	service_proxy.py	/^import uuid$/;"	i
 valid_ip	install.py	/^def valid_ip(address):$/;"	f
 writeProcess	service_proxy.py	/^    def writeProcess(self):$/;"	m	class:ServiceProxy

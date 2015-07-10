@@ -1,6 +1,6 @@
-¸÷½Å±¾ËµÃ÷£º
+å„è„šæœ¬è¯´æ˜Žï¼š
 
-1¡¢ks.cfgÎªkickstart½Å±¾£¬ÐèÒªÐ´Èëcentos¾µÏñÎÄ¼þÊµÏÖ×Ô¶¯°²×°
-2¡¢createiso.sh½Å±¾£¬ÓÃÓÚÖÆ×÷iso¾µÏñ
-3¡¢ipset.sh/login/profile.sh/TRANS.TBLÐè·ÅÈëiso¾µÏñÎÄ¼þÖÐ
-4¡¢installscript´æ·Å¹ÜÀíÆ½Ì¨°²×°½Å±¾
+1ã€ks.cfgä¸ºkickstartè„šæœ¬ï¼Œéœ€è¦å†™å…¥centosé•œåƒæ–‡ä»¶å®žçŽ°è‡ªåŠ¨å®‰è£…
+2ã€createiso.shè„šæœ¬ï¼Œç”¨äºŽåˆ¶ä½œisoé•œåƒ
+3ã€ipset.sh/login/profile.sh/TRANS.TBLéœ€æ”¾å…¥isoé•œåƒæ–‡ä»¶ä¸­
+4ã€installscriptå­˜æ”¾ç®¡ç†å¹³å°å®‰è£…è„šæœ¬

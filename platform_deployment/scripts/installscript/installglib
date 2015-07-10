@@ -12,7 +12,7 @@ install_path=$(cd "$(dirname "$0")";cd ..;pwd)
 #step 1:
 #install autoconf 2.69
 #
-echo "start Install autoconf 2.68.."
+echo "start Install autoconf 2.69.."
 echo "start Install autoconf 2.69.." >> $logfile
 
 cd ${install_path}/lib
@@ -60,8 +60,8 @@ cd ${install_path}/lib
 
 if ! tar xJf automake-1.13.4.tar.xz 2>>$logfile
 then
-    echo "tar automake-1.12.4 fail" 
-    echo "tar automake-1.12.4 fail" >> $logfile
+    echo "tar automake-1.13.4 fail" 
+    echo "tar automake-1.13.4 fail" >> $logfile
     exit 1
 fi
 
@@ -69,23 +69,23 @@ fi
 cd automake-1.13.4
 if ! ./configure --prefix=/usr 2>>$logfile 
 then
-    echo "configure automake-1.12.4 fail" 
-    echo "configure automake-1.12.4 fail" >> $logfile
+    echo "configure automake-1.13.4 fail" 
+    echo "configure automake-1.13.4 fail" >> $logfile
     exit 1
 fi
 
 if ! make 2>>$logfile
 then
-    echo "make automake-1.12.4 fail"
-    echo "make automake-1.12.4 fail" >> $logfile
+    echo "make automake-1.13.4 fail"
+    echo "make automake-1.13.4 fail" >> $logfile
     exit 1
 fi
 
 
 if ! make install 2>>$logfile
 then
-    echo "make install automake-1.12.4 fail"
-    echo "make install automake-1.12.4 fail" >> $logfile
+    echo "make install automake-1.13.4 fail"
+    echo "make install automake-1.13.4 fail" >> $logfile
     exit 1
 fi
 
@@ -117,7 +117,7 @@ then
     exit 1
 fi
 
-if !make 2>>$logfile
+if ! make 2>>$logfile
 then
     echo "make glib-2.36.4 fail"
     echo "make glib-2.36.4 fail" >> $logfile

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="module_test" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/module_test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add directory="../boost_1_57_0" />
+					<Add directory="../framework/include" />
+					<Add directory="include" />
+					<Add directory="jsoncpp-src-0.5.0/include" />
+				</Compiler>
+				<Linker>
+					<Add library="../framework/libzhicloud_public.a" />
+					<Add library="pthread" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_atomic.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_log.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_thread.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_chrono.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_date_time.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_exception.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_filesystem.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_random.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_signals.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_system.a" />
+					<Add library="rt" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/module_test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="include/exception_desc.h" />
+		<Unit filename="include/module_test_service.h" />
+		<Unit filename="include/name_trans.h" />
+		<Unit filename="include/script_var_tab.h" />
+		<Unit filename="include/test_query_task.h" />
+		<Unit filename="jsoncpp-src-0.5.0/src/lib_json/json_reader.cpp" />
+		<Unit filename="jsoncpp-src-0.5.0/src/lib_json/json_value.cpp" />
+		<Unit filename="jsoncpp-src-0.5.0/src/lib_json/json_writer.cpp" />
+		<Unit filename="src/main.cpp" />
+		<Unit filename="src/module_test_service.cpp" />
+		<Unit filename="src/name_trans.cpp" />
+		<Unit filename="src/script_var_tab.cpp" />
+		<Unit filename="src/test_query_task.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

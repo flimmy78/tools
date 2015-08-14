@@ -1,0 +1,130 @@
+{
+
+"test_task":[ 
+	{
+		"request":"create_server_room",
+		"param":{"name":"new_server_room_0", "display":"room_0_display", "description":"room_0_description!"},
+		"respone":{
+			"uuid":{"set":["$room"]}
+		}
+	},
+	{
+		"request":"query_server_room",
+		"param":{},
+		"respone":{
+			"uuid":{"include":["$room"]},
+			"name":{"include":["new_server_room_0"]}
+		}
+	},	
+	{
+		"request":"modify_server_room",
+		"param":{"uuid":"$room", "name":"new_server_room_1", "display":"room_1_display", "description":"room_1_description"}
+	},	
+	{
+		"request":"query_server_room",
+		"param":{},
+		"respone":{
+			"uuid":{"include":["$room"]},
+			"name":{"include":["new_server_room_1"],
+					"except":["new_server_room_0"]
+					}
+		}
+	},	
+	{
+		"request":"create_server_rack",
+		"param":{ "name":"new_server_rack_0",
+					"room":"$room" },
+		"respone":{
+			"uuid":{"set":["$rack"]}
+		}
+	},
+	{
+		"request":"query_server_rack",
+		"param":{"room":"$room"},
+		"respone":{
+			"name":{"include":["new_server_rack_0"]},
+			"uuid":{"include":["$rack"]}
+		}
+	},		
+	{
+		"request":"modify_server_rack",
+		"param":{ "name":"new_server_rack_1",
+					"room":"$room" ,
+					"uuid":"$rack"}
+	},	
+	{
+		"request":"query_server_rack",
+		"param":{"room":"$room"},
+		"respone":{
+			"name":{"include":["new_server_rack_1"],
+					"except":["new_server_rack_0"]},
+			"uuid":{"include":["$rack"]}
+		}
+	},
+	{
+		"request":"add_server",
+		"param":{
+			"rack":"$rack",
+			"name":"name_server_0",
+			"ethernet_address":"00-23-5A-15-99-42"
+		},	
+		"respone":{
+			"uuid":{"set":["$server"]}
+		}
+	},
+	{
+		"request":"query_server",
+		"param":{
+			"rack":"$rack"
+		},	
+		"respone":{
+				"name":{"include":["name_server_0"]},
+				"uuid":{"include":["$server"]}
+		}
+	},	
+	{
+		"request":"modify_server",
+		"param":{
+			"uuid":"$server",
+			"rack":"$rack",
+			"name":"name_server_1",
+			"ethernet_address":"11-24-6B-26-10-53"
+		}	
+	},
+	{
+		"request":"query_server",
+		"param":{
+			"rack":"$rack"
+		},	
+		"respone":{
+				"name":{"include":["name_server_1"], "except":["name_server_0"]},
+				"uuid":{"include":["$server"]}
+		}
+	},
+	{
+		"request":"remove_server",
+		"param":{
+			"uuid":"$server"
+		}
+	},
+	{
+		"request":"delete_server_rack",
+		"param":{
+			"uuid":"$rack"
+		}
+	},
+	{
+		"request":"delete_server_room",
+		"param":{ "uuid": "$room" }
+	},	
+	{
+		"request":"query_server_room",
+		"param":{},
+		"respone":{
+			"uuid":{"except":["$room"]},
+			"name":{"except":["new_server_room_1"]
+					}
+		}
+	}
+]
+}

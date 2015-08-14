@@ -142,7 +142,7 @@ int main(int argc, char** argv)
             cout <<" -v --version    help information" << endl;
             return 0;
         case 'v':
-            cout << "version 0.0.1"<<endl;
+            cout << "version 1.0.0"<<endl;
             return 0;
         default:
             cout <<"Usage: ./module_test -hv | [-f configure_file] -t test_file" << endl;

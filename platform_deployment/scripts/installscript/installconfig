@@ -1,0 +1,92 @@
+#!/bin/sh
+#
+#       script to install config 
+#
+
+logfile="/var/log/zhicloud_install.log"
+install_path=$(cd "$(dirname "$0")";cd ..;pwd)
+
+##########################################################
+#step 1:
+#config communication
+#
+
+
+echo "config communication"
+echo "config communication" >> $logfile
+iptables -I INPUT -m state --state NEW -p udp --dport 5600:5799 -j ACCEPT
+iptables -I INPUT -m state --state NEW -p tcp --dport 5900:5950 -j ACCEPT
+iptables -I INPUT -m state --state NEW -p tcp --dport 10809 -j ACCEPT
+iptables -I INPUT -m state --state NEW -p udp --dport 10000:11000 -j ACCEPT
+service iptables save >> $logfile
+
+if [ ! -d /usr/local/zhicloud ] 
+then
+mkdir /usr/local/zhicloud
+fi
+
+if [ ! -f /usr/local/zhicloud/zhicloud.conf ] 
+then
+cp -f ${install_path}/installscript/zhicloud.conf /usr/local/zhicloud/zhicloud.conf
+fi
+
+if echo "$*" | grep -q "data_server" 
+then
+sed -i '/data_server.*$/d' /usr/local/zhicloud/zhicloud.conf
+echo "data_server=enable" >> /usr/local/zhicloud/zhicloud.conf
+fi
+
+if echo "$*" | grep -q "control_server" 
+then
+sed -i '/control_server.*$/d' /usr/local/zhicloud/zhicloud.conf
+echo "control_server=enable" >> /usr/local/zhicloud/zhicloud.conf
+fi
+
+if echo "$*" | grep -q "statistic_server" 
+then
+sed -i '/statistic_server.*$/d' /usr/local/zhicloud/zhicloud.conf
+echo "statistic_server=enable" >> /usr/local/zhicloud/zhicloud.conf
+fi
+
+if echo "$*" | grep -q "storage_server" 
+then
+sed -i '/storage_server.*$/d' /usr/local/zhicloud/zhicloud.conf
+echo "storage_server=enable" >> /usr/local/zhicloud/zhicloud.conf
+fi
+
+if echo "$*" | grep -q "node_client" 
+then
+sed -i '/node_client.*$/d' /usr/local/zhicloud/zhicloud.conf
+echo "node_client=enable" >> /usr/local/zhicloud/zhicloud.conf
+fi
+
+if echo "$*" | grep -q "intelligent_router" 
+then
+sed -i '/intelligent_router.*$/d' /usr/local/zhicloud/zhicloud.conf
+echo "intelligent_router=enable" >> /usr/local/zhicloud/zhicloud.conf
+fi
+
+cp -f ${install_path}/installscript/autostart.py /usr/local/zhicloud/autostart.py
+
+echo "config rc.local"
+echo "config rc.local" >> $logfile
+if [ ! -f ${install_path}/rc.local.cache ] 
+then
+echo "modprobe nbd" > /etc/rc.d/rc.local
+else
+cat ${install_path}/rc.local.cache > /etc/rc.d/rc.local
+echo "modprobe nbd" >> /etc/rc.d/rc.local
+fi
+echo "export PYTHONPATH=${install_path}/shared:$PYTHONPATH" >> /etc/rc.d/rc.local
+echo "export PYTHONPATH=${install_path}/shared:$PYTHONPATH" >> /etc/bashrc
+export PYTHONPATH=${install_path}/shared:$PYTHONPATH
+sed -i '/zhicloud\/autostart.*$/d' /etc/rc.d/rc.local
+echo "python /usr/local/zhicloud/autostart.py" >> /etc/rc.d/rc.local
+
+#use ntp update the time
+echo "ntpdate time.nist.gov" >>/etc/rc.d/rc.local
+
+echo "install config completed"
+echo "install config completed" >> $logfile
+
+python /usr/local/zhicloud/autostart.py

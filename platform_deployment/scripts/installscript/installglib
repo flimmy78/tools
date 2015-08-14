@@ -1,0 +1,169 @@
+#!/bin/sh
+#
+#       script to install glib
+#
+
+logfile="/var/log/zhicloud_install.log"
+#install_path="/home/zhicloud/lib"
+install_path=$(cd "$(dirname "$0")";cd ..;pwd)
+
+
+##########################################################
+#step 1:
+#install autoconf 2.69
+#
+echo "start Install autoconf 2.69.."
+echo "start Install autoconf 2.69.." >> $logfile
+
+cd ${install_path}/lib
+if ! tar -zxf autoconf-2.69.tar.gz 2>>$logfile
+then
+    echo "tar autoconf packet fail"
+    echo "tar autoconf packet fail" >> $logfile 
+    exit 1
+fi
+
+cd autoconf-2.69
+if ! ./configure --prefix=/usr 2>>$logfile 
+then 
+    echo "configure autoconf packet fail"
+    echo "configure autoconf packet fail" >> $logfile 
+    exit 1
+fi 
+
+if ! make 2>>$logfile
+then 
+    echo "make autoconf fail"
+    echo "make autoconf fail" >> $logfile 
+    exit 1
+fi
+
+if ! make install 2>>$logfile
+then
+    echo "make install autoconf fail"
+    echo "make install autoconf fail" >> $logfile 
+    exit 1      
+fi
+
+echo "install autoconf success"
+echo "install autoconf success" >> $logfile
+
+##########################################################
+#step 2:
+#install automake 1.13
+#
+
+echo "start Install automake 1.13.."
+echo "start Install automake 1.13.." >> $logfile
+
+cd ${install_path}/lib
+
+if ! tar xJf automake-1.13.4.tar.xz 2>>$logfile
+then
+    echo "tar automake-1.13.4 fail" 
+    echo "tar automake-1.13.4 fail" >> $logfile
+    exit 1
+fi
+
+
+cd automake-1.13.4
+if ! ./configure --prefix=/usr 2>>$logfile 
+then
+    echo "configure automake-1.13.4 fail" 
+    echo "configure automake-1.13.4 fail" >> $logfile
+    exit 1
+fi
+
+if ! make 2>>$logfile
+then
+    echo "make automake-1.13.4 fail"
+    echo "make automake-1.13.4 fail" >> $logfile
+    exit 1
+fi
+
+
+if ! make install 2>>$logfile
+then
+    echo "make install automake-1.13.4 fail"
+    echo "make install automake-1.13.4 fail" >> $logfile
+    exit 1
+fi
+
+echo "install automake success"
+echo "install automake success" >> $logfile
+
+
+##########################################################
+#step 3:
+#update install glib to 2.36.4
+#
+
+echo "update Install glib to 2.36.4"
+echo "update Install glib to 2.36.4" >> $logfile
+cd ${install_path}/lib
+
+if ! tar xJf glib-2.36.4.tar.xz 2>>$logfile
+then
+    echo "tar glib-2.36.4 fail"
+    echo "tar glib-2.36.4 fail" >> $logfile 
+    exit 1
+fi
+
+cd glib-2.36.4
+if ! ./configure --prefix=/usr 2>>$logfile
+then 
+    echo "configure glib-2.36.4 fail"
+    echo "configure glib-2.36.4 fail" >> $logfile
+    exit 1
+fi
+
+if ! make 2>>$logfile
+then
+    echo "make glib-2.36.4 fail"
+    echo "make glib-2.36.4 fail" >> $logfile
+    exit 1
+fi
+
+if ! make install 2>>$logfile
+then
+    echo "make install glib-2.36.4 fail"
+    echo "make install glib-2.36.4 fail" >> $logfile
+    exit 1
+fi
+
+echo "install glib-2.36.4 success"
+echo "install glib-2.36.4 success" >> $logfile
+
+##########################################################
+#step 4:
+#update sysconfig glib to 2.36.4
+#
+
+if ! cp -f ${install_path}/lib/glib-2.0.pc /usr/lib64/pkgconfig/. 2>>$logfile
+then
+    echo "set glib-2.0.pc config file fail"
+    echo "set glib-2.0.pc config file fail" >> $logfile
+    exit 1
+fi
+echo "check glib version"
+echo "check glib version" >> $logfile
+
+if ! pkg-config --modversion glib-2.0 2>>$logfile 
+then
+    echo "check glib version fail"
+    echo "check glib version fail" >> $logfile
+    exit 1
+fi
+
+pkg-config --modversion glib-2.0 >>$logfile
+
+
+echo "rebuild X64 System lib link"
+echo "rebuild X64 System lib link" >> $logfile
+
+rm -f /lib64/libglib-2.0.so.0 >>$logfile 
+ln -s /usr/lib/libglib-2.0.so.0.3600.4 /lib64/libglib-2.0.so.0 >>$logfile 
+
+
+
+

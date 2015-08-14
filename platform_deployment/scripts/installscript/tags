@@ -1,0 +1,184 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ABCMeta	progressbar/widgets.py	/^    from abc import ABCMeta, abstractmethod$/;"	i
+AbstractWidget	progressbar/widgets.py	/^    AbstractWidget = ABCMeta('AbstractWidget', (object,), {})$/;"	v
+AbstractWidget	progressbar/widgets.py	/^    AbstractWidget = object$/;"	v
+AddInstallService	install_progress.py	/^    def AddInstallService(self,serviceName):$/;"	m	class:InstallStepManager
+AnimatedMarker	progressbar/widgets.py	/^class AnimatedMarker(Widget):$/;"	c
+Bar	progressbar/widgets.py	/^class Bar(WidgetHFill):$/;"	c
+BouncingBar	progressbar/widgets.py	/^class BouncingBar(Bar):$/;"	c
+ConfigParser	autostart.py	/^import ConfigParser$/;"	i
+Counter	progressbar/widgets.py	/^class Counter(Widget):$/;"	c
+DisableStep	install_progress.py	/^    def DisableStep(self,stepName):$/;"	m	class:InstallStepManager
+ETA	progressbar/widgets.py	/^class ETA(Timer):$/;"	c
+EnableStep	install_progress.py	/^    def EnableStep(self,stepName):$/;"	m	class:InstallStepManager
+FileTransferSpeed	progressbar/widgets.py	/^class FileTransferSpeed(Widget):$/;"	c
+FormatLabel	progressbar/widgets.py	/^class FormatLabel(Timer):$/;"	c
+GetCommand	install_progress.py	/^    def GetCommand(self):$/;"	m	class:InstallStep
+GetValue	autostart.py	/^def GetValue(cfg, Section, Key, Default = ""):$/;"	f
+InstallPath	globalvar.py	/^InstallPath="\/test"$/;"	v
+InstallStep	install_progress.py	/^class InstallStep(object):$/;"	c
+InstallStepManager	install_progress.py	/^class InstallStepManager(object):$/;"	c
+IsEnable	install_progress.py	/^    def IsEnable(self):$/;"	m	class:InstallStep
+Percentage	progressbar/widgets.py	/^class Percentage(Widget):$/;"	c
+ProgressBar	progressbar/__init__.py	/^class ProgressBar(object):$/;"	c
+ResultShow	progressbar/widgets.py	/^class ResultShow(Widget):$/;"	c
+ReverseBar	progressbar/widgets.py	/^class ReverseBar(Bar):$/;"	c
+RotatingMarker	progressbar/widgets.py	/^RotatingMarker = AnimatedMarker$/;"	v
+RunInstallScript	install_progress.py	/^    def RunInstallScript(self):$/;"	m	class:InstallStepManager
+RunProgress	install_progress.py	/^def RunProgress(command,message = "",maxval = 200):$/;"	f
+ServiceProxy	service_proxy.py	/^class ServiceProxy(object):$/;"	c
+SetState	progressbar/__init__.py	/^    def SetState(self,isOK = False):$/;"	m	class:ProgressBar
+SimpleProgress	progressbar/widgets.py	/^class SimpleProgress(Widget):$/;"	c
+TIME_SENSITIVE	progressbar/widgets.py	/^    TIME_SENSITIVE = False$/;"	v	class:Widget
+TIME_SENSITIVE	progressbar/widgets.py	/^    TIME_SENSITIVE = True$/;"	v	class:ETA
+TIME_SENSITIVE	progressbar/widgets.py	/^    TIME_SENSITIVE = True$/;"	v	class:Timer
+Timer	progressbar/widgets.py	/^class Timer(Widget):$/;"	c
+UnknownLength	progressbar/__init__.py	/^class UnknownLength: pass$/;"	c
+Widget	progressbar/widgets.py	/^class Widget(AbstractWidget):$/;"	c
+WidgetHFill	progressbar/widgets.py	/^class WidgetHFill(Widget):$/;"	c
+_DEFAULT_MAXVAL	progressbar/__init__.py	/^    _DEFAULT_MAXVAL = 100$/;"	v	class:ProgressBar
+_DEFAULT_TERMSIZE	progressbar/__init__.py	/^    _DEFAULT_TERMSIZE = 80$/;"	v	class:ProgressBar
+_DEFAULT_WIDGETS	progressbar/__init__.py	/^    _DEFAULT_WIDGETS = [Percentage(), ' ', Bar()]$/;"	v	class:ProgressBar
+__author__	progressbar/__init__.py	/^__author__ = 'Nilton Volpato'$/;"	v
+__author_email__	progressbar/__init__.py	/^__author_email__ = 'first-name dot last-name @ gmail.com'$/;"	v
+__call__	progressbar/__init__.py	/^    def __call__(self, iterable):$/;"	m	class:ProgressBar	file:
+__date__	progressbar/__init__.py	/^__date__ = '2011-05-14'$/;"	v
+__init__	install_progress.py	/^    def __init__(self):$/;"	m	class:InstallStepManager
+__init__	install_progress.py	/^    def __init__(self,command,message="",state=0):$/;"	m	class:InstallStep
+__init__	progressbar/__init__.py	/^    def __init__(self, maxval=None, widgets=None, term_width=None, poll=1,$/;"	m	class:ProgressBar
+__init__	progressbar/widgets.py	/^    def __init__(self, format):$/;"	m	class:FormatLabel
+__init__	progressbar/widgets.py	/^    def __init__(self, format='%d'):$/;"	m	class:Counter
+__init__	progressbar/widgets.py	/^    def __init__(self, format='Elapsed Time: %s'):$/;"	m	class:Timer
+__init__	progressbar/widgets.py	/^    def __init__(self, marker='#', left='|', right='|', fill=' ',$/;"	m	class:Bar
+__init__	progressbar/widgets.py	/^    def __init__(self, marker='#', left='|', right='|', fill=' ',$/;"	m	class:ReverseBar
+__init__	progressbar/widgets.py	/^    def __init__(self, markers='|\/-\\\\'):$/;"	m	class:AnimatedMarker
+__init__	progressbar/widgets.py	/^    def __init__(self, sep=' of '):$/;"	m	class:SimpleProgress
+__init__	progressbar/widgets.py	/^    def __init__(self, unit='B'):$/;"	m	class:FileTransferSpeed
+__init__	service_proxy.py	/^    def __init__(self, service_type, log_level = logging.INFO):$/;"	m	class:ServiceProxy
+__iter__	progressbar/__init__.py	/^    def __iter__(self):$/;"	m	class:ProgressBar	file:
+__next__	progressbar/__init__.py	/^    def __next__(self):$/;"	m	class:ProgressBar	file:
+__slots__	progressbar/__init__.py	/^    __slots__ = ('currval', 'fd', 'finished', 'last_update_time',$/;"	v	class:ProgressBar
+__slots__	progressbar/widgets.py	/^    __slots__ = ('format',)$/;"	v	class:Counter
+__slots__	progressbar/widgets.py	/^    __slots__ = ('format',)$/;"	v	class:FormatLabel
+__slots__	progressbar/widgets.py	/^    __slots__ = ('format',)$/;"	v	class:Timer
+__slots__	progressbar/widgets.py	/^    __slots__ = ('marker', 'left', 'right', 'fill', 'fill_left')$/;"	v	class:Bar
+__slots__	progressbar/widgets.py	/^    __slots__ = ('markers', 'curmark')$/;"	v	class:AnimatedMarker
+__slots__	progressbar/widgets.py	/^    __slots__ = ('sep',)$/;"	v	class:SimpleProgress
+__slots__	progressbar/widgets.py	/^    __slots__ = ('unit', 'format')$/;"	v	class:FileTransferSpeed
+__slots__	progressbar/widgets.py	/^    __slots__ = ()$/;"	v	class:Widget
+__version__	progressbar/__init__.py	/^__version__ = '2.3'$/;"	v
+_env_size	progressbar/__init__.py	/^    def _env_size(self):$/;"	m	class:ProgressBar
+_format_line	progressbar/__init__.py	/^    def _format_line(self):$/;"	m	class:ProgressBar
+_format_widgets	progressbar/__init__.py	/^    def _format_widgets(self):$/;"	m	class:ProgressBar
+_handle_resize	progressbar/__init__.py	/^    def _handle_resize(self, signum=None, frame=None):$/;"	m	class:ProgressBar
+_need_update	progressbar/__init__.py	/^    def _need_update(self):$/;"	m	class:ProgressBar
+_update_widgets	progressbar/__init__.py	/^    def _update_widgets(self):$/;"	m	class:ProgressBar
+abstractmethod	progressbar/widgets.py	/^    abstractmethod = lambda fn: fn$/;"	v
+abstractmethod	progressbar/widgets.py	/^    from abc import ABCMeta, abstractmethod$/;"	i
+any	progressbar/compat.py	/^   def any(iterator):$/;"	f
+array	progressbar/__init__.py	/^    from array import array$/;"	i
+attachLogger	service_proxy.py	/^    def attachLogger(self):$/;"	m	class:ServiceProxy
+command	install_progress.py	/^    command = ""$/;"	v	class:InstallStep
+config	autostart.py	/^config = ConfigParser.ConfigParser()$/;"	v
+console	service_proxy.py	/^    def console(self, content):$/;"	m	class:ServiceProxy
+createService	service_proxy.py	/^    def createService(self):$/;"	m	class:ServiceProxy
+cur_file_dir	install_progress.py	/^def cur_file_dir():$/;"	f
+datetime	progressbar/widgets.py	/^import datetime$/;"	i
+division	progressbar/__init__.py	/^from __future__ import division$/;"	i
+division	progressbar/widgets.py	/^from __future__ import division$/;"	i
+eraseProcess	service_proxy.py	/^    def eraseProcess(self):$/;"	m	class:ServiceProxy
+finish	progressbar/__init__.py	/^    def finish(self):$/;"	m	class:ProgressBar
+format	progressbar/widgets.py	/^    format = '%6.2f %s%s\/s'$/;"	v	class:FileTransferSpeed
+format_time	progressbar/widgets.py	/^    def format_time(seconds):$/;"	m	class:Timer
+format_updatable	progressbar/widgets.py	/^def format_updatable(updatable, pbar):$/;"	f
+getPID	service_proxy.py	/^    def getPID(self):$/;"	m	class:ServiceProxy
+getProcessCommand	service_proxy.py	/^    def getProcessCommand(self, pid):$/;"	m	class:ServiceProxy
+get_option	install.py	/^def get_option():$/;"	f
+getchar	install.py	/^def getchar():$/;"	f
+globalvar	install.py	/^import globalvar$/;"	i
+handlers	service_proxy.py	/^import logging.handlers$/;"	i
+installStepManager	install_progress.py	/^    installStepManager = InstallStepManager()$/;"	v	class:InstallStepManager
+io	install.py	/^import io$/;"	i
+io	service_proxy.py	/^import io$/;"	i
+io	test.py	/^import io$/;"	i
+ioctl	progressbar/__init__.py	/^    from fcntl import ioctl$/;"	i
+ipFormatChk	install.py	/^def ipFormatChk(ip_str):$/;"	f
+isProcessRunning	service_proxy.py	/^    def isProcessRunning(self):$/;"	m	class:ServiceProxy
+loadConfig	service_proxy.py	/^    def loadConfig(self):$/;"	m	class:ServiceProxy
+log_path	service_proxy.py	/^    log_path = "\/var\/log"$/;"	v	class:ServiceProxy
+logging	service_proxy.py	/^import logging$/;"	i
+logging	service_proxy.py	/^import logging.handlers$/;"	i
+mapping	progressbar/widgets.py	/^    mapping = {$/;"	v	class:FormatLabel
+math	progressbar/__init__.py	/^import math$/;"	i
+math	progressbar/widgets.py	/^import math$/;"	i
+message	install_progress.py	/^    message = ""$/;"	v	class:InstallStep
+modifyServer	service_proxy.py	/^    def modifyServer(self, name, rack):        $/;"	m	class:ServiceProxy
+modifyService	service_proxy.py	/^    def modifyService(self, service_name, domain):        $/;"	m	class:ServiceProxy
+next	progressbar/__init__.py	/^    next = __next__$/;"	v	class:ProgressBar
+next	progressbar/compat.py	/^    def next(iter):$/;"	f
+os	autostart.py	/^import os$/;"	i
+os	install.py	/^import os,sys$/;"	i
+os	progressbar/__init__.py	/^import os$/;"	i
+os	service_proxy.py	/^import os$/;"	i
+os	service_proxy.py	/^import os.path$/;"	i
+os	test.py	/^import os,sys$/;"	i
+path	service_proxy.py	/^import os.path$/;"	i
+percent	progressbar/__init__.py	/^    percent = property(percentage)$/;"	v	class:ProgressBar
+percentage	progressbar/__init__.py	/^    def percentage(self):$/;"	m	class:ProgressBar
+prefixes	progressbar/widgets.py	/^    prefixes = ' kMGTPEZY'$/;"	v	class:FileTransferSpeed
+re	install.py	/^import re$/;"	i
+re	test.py	/^import re$/;"	i
+redirectOutput	service_proxy.py	/^    def redirectOutput(self):$/;"	m	class:ServiceProxy
+runCommand	install_progress.py	/^def runCommand(command,p):$/;"	f
+runinstall	install.py	/^def runinstall():$/;"	f
+set_group	install.py	/^def set_group():$/;"	f
+setip	install.py	/^def setip():$/;"	f
+signal	progressbar/__init__.py	/^import signal$/;"	i
+socket	install.py	/^import socket$/;"	i
+socket	test.py	/^import socket$/;"	i
+start	progressbar/__init__.py	/^    def start(self):$/;"	m	class:ProgressBar
+start	service_proxy.py	/^    def start(self):$/;"	m	class:ServiceProxy
+state	install_progress.py	/^    state = 0$/;"	v	class:InstallStep
+stop	service_proxy.py	/^    def stop(self):$/;"	m	class:ServiceProxy
+subprocess	install_progress.py	/^import subprocess$/;"	i
+sys	install.py	/^import os,sys$/;"	i
+sys	install.py	/^import sys$/;"	i
+sys	install_progress.py	/^import sys$/;"	i
+sys	progressbar/__init__.py	/^import sys$/;"	i
+sys	service_proxy.py	/^import sys$/;"	i
+sys	test.py	/^import os,sys$/;"	i
+sys	test.py	/^import sys$/;"	i
+term	install.py	/^term = io.open(sys.stdin.fileno(),'r')$/;"	v
+termios	install.py	/^import termios$/;"	i
+termios	progressbar/__init__.py	/^    import termios$/;"	i
+termios	test.py	/^import termios$/;"	i
+test	test.py	/^def test():$/;"	f
+time	install_progress.py	/^import time$/;"	i
+time	progressbar/__init__.py	/^import time$/;"	i
+tmp_path	service_proxy.py	/^    tmp_path = "\/tmp"$/;"	v	class:ServiceProxy
+tty	install.py	/^import tty$/;"	i
+tty	test.py	/^import tty$/;"	i
+update	progressbar/__init__.py	/^    def update(self, value=None):$/;"	m	class:ProgressBar
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:AnimatedMarker
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:Counter
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:ETA
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:FileTransferSpeed
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:FormatLabel
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:Percentage
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:ResultShow
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:SimpleProgress
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:Timer
+update	progressbar/widgets.py	/^    def update(self, pbar):$/;"	m	class:Widget
+update	progressbar/widgets.py	/^    def update(self, pbar, width):$/;"	m	class:Bar
+update	progressbar/widgets.py	/^    def update(self, pbar, width):$/;"	m	class:BouncingBar
+update	progressbar/widgets.py	/^    def update(self, pbar, width):$/;"	m	class:WidgetHFill
+user_input	install.py	/^def user_input(value = "1234567890.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"):$/;"	f
+uuid	install.py	/^import uuid$/;"	i
+uuid	service_proxy.py	/^import uuid$/;"	i
+valid_ip	install.py	/^def valid_ip(address):$/;"	f
+writeProcess	service_proxy.py	/^    def writeProcess(self):$/;"	m	class:ServiceProxy

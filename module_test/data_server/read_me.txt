@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 æµ‹è¯•æ–¹æ³•ï¼š
 1.å¡«å†™module_test.confé…ç½®æ–‡ä»¶ä¸­å¹³å°ä¿¡æ¯
 2.æ‰§è¡Œå‘½ä»¤ï¼š./module_test -t xxxx.conf
@@ -11,4 +12,23 @@ communication_test.confï¼ˆæµ‹è¯•é€šè®¯ç®¡ç†ï¼‰
 *å®Œæ•´æµ‹è¯•æ–¹æ¡ˆè¯·è§doc/test/ä¸‹ã€ŠDataServeræµ‹è¯•æ–¹æ¡ˆã€‹
 
 
+=======
+²âÊÔ½Å±¾£º
+
+ÎïÀíÍØÆË¹ÜÀí
+»ú·¿£ºTopology_room_normal.conf
+»ú¼Ü£ºTopology_rack_normal.conf
+·þÎñÆ÷£ºTopology_server_normal.conf
+
+
+Í¨Ñ¶¹ÜÀí
+communication_test.conf
+
+
+ÅäÖÃÎÄ¼þ£º
+module_test.conf
+
+Ö´ÐÐÎÄ¼þ£º
+module_test
+>>>>>>> zhicloud_tools/master
 

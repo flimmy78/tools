@@ -1,8 +1,8 @@
-²âÊÔ½Å±¾£º
-ss_disk_image.conf £¨´ÅÅÌ¾µÏñÏà¹Ø£©
-ss_iso_normal.conf£¨¹âÅÌ¾µÏñÏà¹Ø£©
+æµ‹è¯•è„šæœ¬ï¼š
+ss_disk_image.conf ï¼ˆç£ç›˜é•œåƒç›¸å…³ï¼‰
+ss_iso_normal.confï¼ˆå…‰ç›˜é•œåƒç›¸å…³ï¼‰
 
-*ÍêÕû²âÊÔ·½°¸Çë¼ûdoc/test/ÏÂ¡¶StorageServer²âÊÔ·½°¸¡·
+*å®Œæ•´æµ‹è¯•æ–¹æ¡ˆè¯·è§doc/test/ä¸‹ã€ŠStorageServeræµ‹è¯•æ–¹æ¡ˆã€‹
 
 
 

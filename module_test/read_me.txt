@@ -1,4 +1,4 @@
-﻿测试方法：
+测试方法：
 1.填写module_test.conf配置文件中平台信息
   ps：测试ds、cs模块时，test_service_type项可以为同类型模块以外外任意类型，测试其余模块该项需填control_server类型
   

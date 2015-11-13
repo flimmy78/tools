@@ -249,31 +249,36 @@ int main(int argc, char** argv)
         }
         for(auto& list_name : js_item.getMemberNames())
         {
-            if(list_name != "param_list" || list_name != "respone_list")
+
+			//cout<<"wangli test list_name is "<<list_name<<endl;
+            if(list_name != "param_list" && list_name != "respone_list" && list_name != "event_list")
             {
+            	//cout<<"wangli test 2     !!!!!"<<endl;
                 continue;
             }
             Json::Value& js_params = js_item[list_name];
+
+			//cout<<"wangli test 55555!!!!!"<<endl;
             for(auto& param_name : js_params.getMemberNames())
             {
                 auto rtn = get_name_trans()("param", param_name);
                 if(rtn.first == false)
                 {
-                    cout<< "qurey  "<<  name << " param " << param_name << "  not found!" << endl;
+                    cout<< "qurey "<<  name << " param " << param_name << "  not found!" << endl;
                     cout << "please check " << config_file << endl;
                     return 0;
                 }
                 Json::Value& js_param_item = js_params[param_name];
                 if(false == chk_json_data(js_param_item,"data_type:S", err_info))
                 {
-                    cout<< "qurey  "<<  name << " param " << param_name << "  err :" << err_info << endl;
+                    cout<< "qurey "<<  name << " param " << param_name << "  err :" << err_info << endl;
                     cout << "please check " << config_file << endl;
                     return 0;
                 }
                 auto vtype = TestQueryTask::getTypeByDesc(js_param_item["data_type"].asString());
                 if(vtype == TestQueryTask::ValueType::unknown)
                 {
-                    cout<< "qurey  "<<  name << " param " << param_name << "  data_type not supply!" << endl;
+                    cout<< "qurey "<<  name << " param " << param_name << "  data_type not supply!" << endl;
                     cout << "please check " << config_file << endl;
                     return 0;
                 }
@@ -281,17 +286,29 @@ int main(int argc, char** argv)
                 {
                     if(false == js_param_item["trans_tab"].isString())
                     {
-                        cout<< "qurey  "<<  name << " param " << param_name << "  trans_tab must be string" << endl;
+                        cout<< "qurey "<<  name << " param " << param_name << "  trans_tab must be string" << endl;
                         cout << "please check " << config_file << endl;
                         return 0;
                     }
                     if(false == config_root["trans"].isMember( js_param_item["trans_tab"].asString()))
                     {
-                        cout<< "qurey  "<<  name << " param " << param_name << "  trans_tab "  << js_param_item["trans_tab"].asString() << " not found in trans" << endl;
+                        cout<< "qurey "<<  name << " param " << param_name << "  trans_tab "  << js_param_item["trans_tab"].asString() << " not found in trans" << endl;
                         cout << "please check " << config_file << endl;
                         return 0;
                     }
                 }
+				/* BEGIN: Added by wangli, 2015/10/22 */
+				if (js_param_item.isMember("optional"))
+				{
+					//cout<<"wangli optional !!!!!"<<endl;
+				    if(false == js_param_item["optional"].isString())
+                    {
+                        cout<< "qurey "<<  name << " param " << param_name << "  optional must be string" << endl;
+                        cout << "please check " << config_file << endl;
+                        return 0;
+                    }
+				}
+				/* END:   Added by wangli, 2015/10/22   PN: */
             }
         }
     }
@@ -302,11 +319,11 @@ int main(int argc, char** argv)
     srand(timeCur.tv_usec);
     string service_name = (boost::format("T%d_%d_%04d") %static_cast<int>(timeCur.tv_sec&0xffff) %static_cast<int>(timeCur.tv_usec&0xffff) % (rand()&0xffff)).str();
 
-     if(false == test_root.isMember("test_task"))
-     {
-        cout << "not found \"test_task\" item in " << str_module_test_file <<", there has nothing to do!" << endl;
-        return 0;
-     }
+	if(false == test_root.isMember("test_task"))
+	{
+		cout << "not found \"test_task\" item in " << str_module_test_file <<", there has nothing to do!" << endl;
+		return 0;
+	}
     Json::Value& test_task = test_root["test_task"];
     if(false == test_task.isArray())
     {

@@ -35,6 +35,7 @@ namespace zhicloud
             virtual void onChannelDisconnected(const string& node_name, const zhicloud::util::ServiceType& node_type);
 
             virtual void handleResponseMessage(zhicloud::transport::AppMessage& msg, const string& sender);
+			virtual void handleEventMessage(AppMessage& msg, const string& sender);
 
         private:
             string connect_node_name;
@@ -42,6 +43,7 @@ namespace zhicloud
             TestTasks               test_tasks;
             std::mutex              test_mutex;
             std::atomic_bool    is_wait_respone;
+            std::atomic_bool    is_wait_event;
             std::atomic_bool    is_test_error;
             std::atomic_int       test_task_idx;
     };

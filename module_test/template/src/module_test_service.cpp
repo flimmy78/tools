@@ -11,6 +11,7 @@ namespace zhicloud
     ModuleTestService::ModuleTestService(const string& service_name, zhicloud::util::ServiceType service_type, const string& domain, const string& ip, const string& group_ip, const uint16_t& group_port)
                         :NodeService(service_type, service_name, domain,ip,5600,200, group_ip, group_port,"0.0" )
                         ,is_wait_respone(false)
+                        ,is_wait_event(false)
                         ,is_test_error(false)
                         ,test_task_idx(0)
     {
@@ -62,6 +63,14 @@ namespace zhicloud
         logger->info(boost::format("test service connect on %s !") % connect_node_name);
         while(!is_test_error)
         {
+        	/* BEGIN: Added by wangli, 2015/10/26 */
+        	if (true == is_wait_event)
+        	{
+        	    //cout << "wait fo event ========================" << endl;
+				usleep(1000);	// wait for respone;
+				continue;
+        	}
+        	/* END:   Added by wangli, 2015/10/26   PN: */
             if(false == is_wait_respone)
             {
                 MutexLock lock(test_mutex);
@@ -71,7 +80,7 @@ namespace zhicloud
                         break;  // test over
                 }
                 cout << "========================" << endl;
-               logger->info( "========================");
+                logger->info( "========================");
                 logger->info(boost::format("now start [%d] test request!") % test_task_idx);
                 cout << "now test for " << test_tasks[test_task_idx].getDesc() << endl;
                 zhicloud::transport::AppMessage request_msg;
@@ -81,15 +90,22 @@ namespace zhicloud
                     cout << "have an error! Can not running test!" << endl;
                     break;
                 }
+				if (test_tasks[test_task_idx].jumpToWaitRespones())
+				{
+					is_wait_respone = true;
+				}
+				else
+				{
+				    is_wait_event = true;
+				}
                 sendMessage(request_msg, connect_node_name);
-                is_wait_respone = true;
                 wait_count = 0;
             }
             else
             {
                 if( wait_count > 1000)
                 {
-                    logger->info("there i still not receive respone in 1s");
+                    logger->info("there still not receive respone in 1s");
                     cout << "receive respone out of time (more then 1s)"<< endl;
                     break;
                 }
@@ -157,6 +173,36 @@ namespace zhicloud
 
         test_task_idx++;
         is_wait_respone = false;
+		/* BEGIN: Added by wangli, 2015/10/26 */
+		is_wait_event = false;
+		/* END:   Added by wangli, 2015/10/26   PN: */
     }
+
+	/* BEGIN: Added by wangli, 2015/10/26 */
+    void ModuleTestService::handleEventMessage(AppMessage& msg, const string& sender)
+	{
+		if (EventEnum::ack == (EventEnum)msg.id || EventEnum::report == (EventEnum)msg.id)
+		{
+			MutexLock lock(test_mutex);
+			logger->info("receive event");
+
+
+			if(static_cast<uint32_t>(test_task_idx) >= test_tasks.size())
+			{
+					//is_test_error = true;
+					return;  // test over
+			}
+			if(false == test_tasks[test_task_idx].onEvent(msg, sender, *logger))
+			{
+				is_test_error = true;
+
+				cout << "now test task is quit!!" << endl;
+			}
+
+			is_wait_respone = true;
+		}
+
+	}
+	/* END:   Added by wangli, 2015/10/26   PN: */
 
 }

@@ -1,8 +1,15 @@
 #include "test_query_task.h"
 #include <sstream>
 #include "name_trans.h"
+#include <vector>
+#include <string>
+#include <iostream>
+
+#include <util/serialize.h>
+
 using namespace zhicloud::util;
 using namespace zhicloud::transport;
+using namespace std;
 
 namespace zhicloud
 {
@@ -25,10 +32,24 @@ namespace zhicloud
             // check param is okey
             for(auto& need_param : js_request_param_desc.getMemberNames())
             {
-                if(js_request_param_desc.isMember("optional") && js_request_param_desc["optional"].asBool())
-                {
-                    continue;
-                }
+				bool is_obj = js_request_param_desc[need_param].isObject();
+				bool is_mb = js_request_param_desc[need_param].isMember("optional");
+				//cout<<" TestQueryTask "<<need_param<<" is obj "<<is_obj<<" optional "<<is_mb<<endl;
+				if (is_obj && is_mb)
+				{
+					std::string str_opt = js_request_param_desc["optional"].asString();
+					//cout<<"wangli TestQueryTask  "<<str_opt<<" end"<<endl;
+					if (str_opt.compare("false"))
+					{
+						continue;
+					}
+				}
+
+				/*if(js_request_param_desc.isMember("optional") && !js_request_param_desc["optional"].asBool())
+				{
+					continue;
+				}*/
+
                 if(false == params.isMember(need_param))
                 {
                     err_info += "query test data miss the param of \"" + need_param + "\"!";
@@ -52,6 +73,21 @@ namespace zhicloud
                     return;
                 }
             }
+
+
+			/* BEGIN: Added by wangli, 2015/10/21 */
+			if (query_desc.isMember("event_list"))
+			{
+				js_event_desc = query_desc["event_list"];
+			    //cout<<"query_desc "<<query_desc<<" has event"<<endl;
+				next_state = NextState::event;
+			}
+			else
+			{
+			    //cout<<"query_desc "<<query_desc<<" has no event"<<endl;
+				next_state = NextState::respones;
+			}
+			/* END:   Added by wangli, 2015/10/21   PN: */
 
             is_ok = true;
         }
@@ -156,6 +192,7 @@ namespace zhicloud
                 {
                     return false;
                 }
+                vector<string> strArray1;
                 switch(val_type)
                 {
                     case ValueType::uint_type :
@@ -188,6 +225,49 @@ namespace zhicloud
                         }
                         request_msg.setString(param_key, param_test.asString());
                         break;
+
+					/* BEGIN: Added by wangli, 2015/9/1 */
+					case ValueType::str_array :
+						if (false == param_test.isArray())
+						{
+						    err_info = param_name;
+                            err_info += " need string array";
+                            cout << err_info << endl;
+                            return false;
+						}
+
+						for (uint32_t i=0; i<param_test.size(); i++)
+						{
+						    strArray1.push_back(param_test[i].asString());
+
+						    //cout<<"wangli test asString: "<<param_test[i].asString()<<endl;
+						}
+						request_msg.setStringArray(param_key, strArray1);
+						break;
+
+					/* END:   Added by wangli, 2015/9/1 */
+					/* BEGIN: Added by wangli, 2015/10/22 */
+					case ValueType::uint_array :
+                        {
+                            if (false == param_test.isArray())
+                            {
+                                err_info = param_name;
+                                err_info += " need uint array";
+                                cout << err_info << endl;
+                                return false;
+                            }
+
+                            vector<uint64_t> uint_arr;
+
+                            for (uint32_t i=0; i<param_test.size(); i++)
+                            {
+                                uint_arr.push_back(param_test[i].asUInt());
+                            }
+                            request_msg.setUIntArray(param_key, uint_arr);
+						}
+						break;
+					/* END:   Added by wangli, 2015/10/22   PN: */
+
                     default:
                         err_info = "\"";
                         err_info += param_name;
@@ -202,7 +282,8 @@ namespace zhicloud
 
     bool TestQueryTask::onRespone( zhicloud::transport::AppMessage& respone_msg, const string& sender,  Logger& logger)
     {
-         cout << "receive respone " << endl;
+		bool is_optional = false;
+        cout << "receive respone " << endl;
         if(false == respone_msg.success)
         {
             cout << "respone false! now break test!"<< endl;
@@ -227,13 +308,24 @@ namespace zhicloud
             {
                 trans_tab_name = js_respone_desc[respone_name]["trans_tab"].asString();
             }
+			/* BEGIN: Added by wangli, 2015/11/11 */
+			if (js_respone_desc[respone_name].isMember("optional"))
+			{
+				std::string str_opt = js_request_param_desc["optional"].asString();
+				//cout<<"wangli TestQueryTask  "<<str_opt<<" end"<<endl;
+				if (str_opt.compare("true"))
+				{
+					is_optional = true;
+				}
+			}
+			/* END:   Added by wangli, 2015/11/11   PN: */
             switch(vtype)
             {
             case ValueType::uint_type :
                 {
                     uint32_t data;
 
-                    if(false == respone_msg.getUInt(param_key, data))
+                    if(false == respone_msg.getUInt(param_key, data) && !is_optional)
                     {
                         string info;
                         info = (boost::format("respone miss uint item %s[%u]!") % respone_name % static_cast<uint32_t>(param_key) ).str();
@@ -266,7 +358,7 @@ namespace zhicloud
             case ValueType::float_type :
                 {
                     float data;
-                    if(false == respone_msg.getFloat(param_key, data))
+                    if(false == respone_msg.getFloat(param_key, data) && !is_optional)
                     {
                         string info;
                         info = (boost::format("respone miss float item %s[%u]!") % respone_name % static_cast<uint32_t>(param_key) ).str();
@@ -285,7 +377,7 @@ namespace zhicloud
             case ValueType::str_type :
                 {
                     std::string data;
-                    if(false == respone_msg.getString(param_key, data))
+                    if(false == respone_msg.getString(param_key, data) && !is_optional)
                     {
                         string info;
                         info = (boost::format("respone miss string item %s[%u]!") % respone_name % static_cast<uint32_t>(param_key) ).str();
@@ -304,7 +396,7 @@ namespace zhicloud
             case ValueType::uint_array :
                 {
                     AppMessage::uint_array_type data;
-                    if(false == respone_msg.getUIntArray(param_key, data))
+                    if(false == respone_msg.getUIntArray(param_key, data) && !is_optional)
                     {
                         string info;
                         info = (boost::format("respone miss uint_array item %s[%u]!") % respone_name % static_cast<uint32_t>(param_key) ).str();
@@ -340,7 +432,7 @@ namespace zhicloud
             case ValueType::float_array :
                 {
                     AppMessage::float_array_type data;
-                    if(false == respone_msg.getFloatArray(param_key, data))
+                    if(false == respone_msg.getFloatArray(param_key, data) && !is_optional)
                     {
                         string info;
                         info = (boost::format("respone miss float_array item %s[%u]!") % respone_name % static_cast<uint32_t>(param_key) ).str();
@@ -364,7 +456,7 @@ namespace zhicloud
             case ValueType::str_array :
                 {
                     AppMessage::string_array_type data;
-                    if(false == respone_msg.getStringArray(param_key, data))
+                    if(false == respone_msg.getStringArray(param_key, data) && !is_optional)
                     {
                         string info;
                         info = (boost::format("respone miss string_array item %s[%u]!") % respone_name % static_cast<uint32_t>(param_key) ).str();
@@ -388,7 +480,7 @@ namespace zhicloud
             case ValueType::uint_array_array :
                 {
                     AppMessage::uint_array_array_type data;
-                    if(false == respone_msg.getUIntArrayArray(param_key, data))
+                    if(false == respone_msg.getUIntArrayArray(param_key, data) && !is_optional)
                     {
                         string info;
                         info = (boost::format("respone miss uint_array_array item %s[%u]!") % respone_name % static_cast<uint32_t>(param_key) ).str();
@@ -431,7 +523,7 @@ namespace zhicloud
             case ValueType::float_array_array :
                 {
                     AppMessage::float_array_array_type data;
-                    if(false == respone_msg.getFloatArrayArray(param_key, data))
+                    if(false == respone_msg.getFloatArrayArray(param_key, data) && !is_optional)
                     {
                         string info;
                         info = (boost::format("respone miss float_array_array item %s[%u]!") % respone_name % static_cast<uint32_t>(param_key) ).str();
@@ -462,7 +554,7 @@ namespace zhicloud
             case ValueType::str_array_array :
                 {
                     AppMessage::string_array_array_type data;
-                    if(false == respone_msg.getStringArrayArray(param_key, data))
+                    if(false == respone_msg.getStringArrayArray(param_key, data) && !is_optional)
                     {
                         string info;
                         info = (boost::format("respone miss string_array_array item %s[%u]!") % respone_name % static_cast<uint32_t>(param_key) ).str();
@@ -526,6 +618,27 @@ namespace zhicloud
         return true;
     }
 
+
+    bool TestQueryTask::onEvent( zhicloud::transport::AppMessage& event_msg, const string& sender,  Logger& logger)
+    {
+        //cout << "receive event " << endl;
+		switch ((EventEnum)event_msg.id)
+		{
+		    case EventEnum::report:
+		        uint32_t level;
+				if(false == event_msg.getUInt(ParamEnum::level, level))
+				{
+					cout<<"handle report get level fail"<<endl;
+					return false;
+				}
+				cout<<"handle report get level "<<level<<endl;
+		        break;
+
+		    default:
+		        break;
+		}
+        return true;
+    }
 
     static bool value_include_check(const Json::Value& val, const Json::Value& chk_data)
     {
@@ -723,7 +836,20 @@ namespace zhicloud
     }
 
 
+	/* BEGIN: Added by wangli, 2015/10/26 */
 
+	bool TestQueryTask::jumpToWaitRespones() const
+	{
+	    if (NextState::respones == next_state)
+	    {
+	        return true;
+	    }
+		else
+		{
+		    return false;
+		}
+	}
+	/* END:   Added by wangli, 2015/10/26   PN: */
 
 
 

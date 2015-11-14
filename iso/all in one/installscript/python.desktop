@@ -1,0 +1,10 @@
+
+[Desktop Entry]
+Type=Application
+Exec=python /home/zhicloud/config_window/main.py
+Hidden=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=zhicloud_config
+Name=zhicloud_config
+Comment[en_US]=zhicloud config window
+Comment=zhicloud config window

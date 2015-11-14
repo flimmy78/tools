@@ -1,0 +1,77 @@
+#!/bin/sh
+#
+#     Install Libvirt、Virtinst and init Libvirt
+#
+
+#####################################
+#1.Install Libvirt
+ldconfig
+logfile="/var/log/zhicloud_install.log"
+install_path="/home/zhicloud/lib"
+
+echo "start Install libvirt.."
+echo "start Install libvirt.." >> $logfile
+
+cd /home/zhicloud/package
+rpm -ivh libvirt-1.2.11-0.x86_64.rpm
+ln -s /var/run/libvirt/libvirt-sock /usr/local/var/run/libvirt/
+echo "install Libvirt success"
+echo "install Libvirt success" >> $logfile
+
+###################################
+#2.Install libvirt-python#
+cd ${install_path}
+
+if ! tar -zxf libvirt-python-1.2.11.tar.gz 2>>$logfile
+then
+    echo "tar libvirt-python packet fail"
+    echo "tar libvirt-python packet fail" >> $logfile 
+    exit 1
+fi
+
+cd libvirt-python-1.2.11
+if ! python setup.py install 2>>$logfile
+then 
+    echo "install libvirt-python fail"
+    echo "install libvirt-python fail" >> $logfile 
+    exit 1
+fi 
+
+
+#2.Install Virtinst#
+echo "start Install Virtinst..."
+echo "start Install Virtinst...">> $logfile
+
+cd ${install_path}
+if ! tar -zxf virtinst-0.600.4.tar.gz 2>>$logfile
+then
+    echo "tar virtinst packet fail"
+    echo "tar virtinst packet fail" >> $logfile 
+    exit 1
+fi
+
+cd virtinst-0.600.4
+if ! python setup.py install 2>>$logfile
+then 
+    echo "install Virtinst fail"
+    echo "install Virtinst fail" >> $logfile 
+    exit 1
+fi 
+cp virt-* /usr/sbin/
+echo "install Virtinst success"
+echo "install Virtinst success" >> $logfile
+
+#######################################
+#3.init the libvirt
+ldconfig  #注册service
+echo "init libvirt... "
+chkconfig cgconfig on 2>>$logfile
+service cgconfig start 2>>$logfile
+echo "start config vnc&qemu..."
+sed -i 's/#vnc_listen = "0.0.0.0"/vnc_listen = "0.0.0.0"/g' /etc/libvirt/qemu.conf
+echo "set config vnc_listen = 0.0.0.0"
+sed -i 's/#user = "root"/user = "root"/g' /etc/libvirt/qemu.conf
+echo "set config user = root"
+sed -i 's/#group = "root"/group = "root"/g' /etc/libvirt/qemu.conf
+echo "set config group = root"
+echo "install libvirt end" >>$logfile

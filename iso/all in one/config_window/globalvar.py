@@ -1,0 +1,1 @@
+InstallPath="/home/zhicloud"

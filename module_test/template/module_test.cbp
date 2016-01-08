@@ -42,10 +42,27 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add directory="include" />
+					<Add directory="../boost_1_57_0" />
+					<Add directory="../framework/include" />
+					<Add directory="jsoncpp-src-0.5.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="../framework/libzhicloud_public.a" />
+					<Add library="pthread" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_atomic.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_log.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_thread.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_chrono.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_date_time.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_exception.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_filesystem.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_random.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_signals.a" />
+					<Add library="../boost_1_57_0/stage/lib/libboost_system.a" />
+					<Add library="rt" />
 				</Linker>
 			</Target>
 		</Build>
